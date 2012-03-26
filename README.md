@@ -5,7 +5,8 @@ TODO: Write a gem description
 
 Why 'RSS'? Because [class for Atom](http://apidock.com/ruby/v1_9_2_180/RSS/Atom) bundled with Ruby uses RSS namespace.
 
-## Installation
+Installation
+------------
 
 Add this line to your application's Gemfile:
 
@@ -19,11 +20,13 @@ Or install it yourself as:
 
     $ gem install rss-opds
 
-## Usage
+Usage
+-----
 
 TODO: Write usage instructions here
 
-## Contributing
+Contributing
+------------
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
@@ -42,7 +45,7 @@ Development Plan
 References
 ----------
 
-* [RSS liburary documentation](http://www.cozmixng.org/~rwiki/?cmd=view;name=RSS+Parser)
+* [RSS library documentation](http://www.cozmixng.org/~rwiki/?cmd=view;name=RSS+Parser)
 * [OPDS specification](http://opds-spec.org/specs/)
-* [Japanese translation](http://www.kzakza.com/opds/opds1_0_jpn.html) for version 1.0. It helped me very well, thank you!
+* [Japanese translation](http://www.kzakza.com/opds/opds1_0_jpn.html) for OPDS version 1.0. That helped me very well, thank you!
 * [OPDS validator](https://github.com/zetaben/opds-validator)
