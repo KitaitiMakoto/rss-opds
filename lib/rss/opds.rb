@@ -1,0 +1,119 @@
+require 'rss/atom'
+require 'rss/dcterms'
+require 'rss/atom/feed_history'
+require 'rss/opds/version'
+
+module RSS
+  module Utils
+    module TrueOther
+      module_function
+      def parse(value)
+        if value === true
+          value
+        else
+          /\Atrue\z/i.match(value.to_s) ? true : false
+        end
+      end
+    end
+  end
+
+  module BaseModel
+    private
+    def true_other_attr_reader(*attrs)
+      attrs.each do |attr|
+        attr = attr.id2name if attr.kind_of?(Integer)
+        module_eval(<<-EOC, __FILE__, __LINE__ + 1)
+          attr_reader(:#{attr})
+          def #{attr}?
+            TrueOther.parse(@#{attr})
+          end
+        EOC
+      end
+    end
+
+    def true_other_writer(name, disp_name=name)
+      module_eval(<<-EOC, __FILE__, __LINE__ + 1)
+        def #{name}=(new_value)
+          new_value = 'true' if new_value === true
+          @#{name} = new_value
+        end
+      EOC
+    end
+  end
+
+  class Element
+    class << self
+      alias rss_def_corresponded_attr_writer def_corresponded_attr_writer
+      def def_corresponded_attr_writer(name, type=nil, disp_name=nil)
+        disp_name ||= name
+        if type == :true_other
+          true_other_writer name, disp_name
+        else
+          rss_def_corresponded_attr_writer name, type, disp_name
+        end
+      end
+
+      alias rss_def_corresponded_attr_reader def_corresponded_attr_reader
+      def def_corresponded_attr_reader(name, type=nil)
+        if type == :true_other
+          true_other_attr_reader name, type
+        else
+          rss_def_corresponded_attr_reader name, type
+        end
+      end
+    end
+  end
+
+  module OPDS
+    PREFIX = 'opds'
+    URI = 'http://opds-spec.org/2010/catalog'
+
+    class Price < Element
+      include Atom::CommonModel
+      include Atom::ContentModel
+
+      install_ns(PREFIX, URI)
+      install_must_call_validator('opds', URI)
+      install_get_attribute('currencycode', '')
+
+      class << self
+        def required_prefix
+          PREFIX
+        end
+
+        def required_uri
+          URI
+        end
+
+        def need_parent?
+          true
+        end
+      end
+
+      @tag_name = 'price'
+
+      def full_name
+        tag_name_with_prefix(PREFIX)
+      end
+
+      alias value content
+      alias value= content=
+    end
+
+    BaseListener.install_class_name(URI, 'price', 'Price')
+    BaseListener.install_get_text_element(Atom::URI, 'price', 'dcterms_price')
+  end
+
+  module Atom
+    class Feed
+      class Entry
+        class Link
+          Price = OPDS::Price
+          install_have_children_element 'price', OPDS::URI, '*', 'opds_price'
+          install_get_attribute('facetGroup', OPDS::URI, false, nil, nil, 'opds:facetGroup')
+          install_get_attribute('activeFacet', OPDS::URI, false, [:true_other, :true_other], nil, 'opds:activeFacet')
+        end
+      end
+    end
+  end
+end
