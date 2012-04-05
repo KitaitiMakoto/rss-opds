@@ -110,8 +110,13 @@ module RSS
         class Link
           Price = OPDS::Price
           install_have_children_element 'price', OPDS::URI, '*', 'opds_price'
-          install_get_attribute('facetGroup', OPDS::URI, false, nil, nil, 'opds:facetGroup')
-          install_get_attribute('activeFacet', OPDS::URI, false, [:true_other, :true_other], nil, 'opds:activeFacet')
+          [
+           ['facetGroup', nil],
+           ['activeFacet', [:true_other, :true_other]]
+          ].each do |name, type|
+            disp_name = "#{OPDS::PREFIX}:#{name}"
+            install_get_attribute(name, OPDS::URI, false, type, nil, disp_name)
+          end
         end
       end
     end
