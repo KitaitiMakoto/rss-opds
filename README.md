@@ -1,7 +1,10 @@
 RSS::OPDS
 =========
 
-TODO: Write a gem description
+[OPDS][opds] parser and maker.
+OPDS(Open Publication Distribution System) is feed
+
+[opds]:http://opds-spec.org/specs/opds-catalog-1-1
 
 Why 'RSS'? Because [class for Atom](http://apidock.com/ruby/v1_9_2_180/RSS/Atom) bundled with Ruby uses RSS namespace.
 
@@ -23,7 +26,14 @@ Or install it yourself as:
 Usage
 -----
 
-TODO: Write usage instructions here
+    require 'open-uri'
+    require 'rss/opds'
+    
+    opds = RSS::Parser.parse open(uri)
+    opds.entries.each do |entry|
+     price_elem = entry.links.select {|link| link.opds_price}.first
+     puts price_elem
+    end
 
 Contributing
 ------------

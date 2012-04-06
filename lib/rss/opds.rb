@@ -110,9 +110,19 @@ module RSS
 
   module Atom
     class Feed
+      def navigation_feed?
+        links.any? do |link|
+          link.rel == 'self' and link.type == OPDS::TYPES['navigation']
+        end
+      end
+
+      def acquisition_feed?
+        links.any? do |link|
+          link.rel == 'self' and link.type == OPDS::TYPES['acquisition']
+        end
+      end
+
       class Link
-        Price = OPDS::Price
-        install_have_children_element 'price', OPDS::URI, '*', 'opds_price'
         [
          ['facetGroup', nil],
          ['activeFacet', [:true_other, :true_other]]
@@ -124,15 +134,10 @@ module RSS
         end
       end
 
-      def navigation_feed?
-        links.any? do |link|
-          link.rel == 'self' and link.type == OPDS::TYPES['navigation']
-        end
-      end
-
-      def acquisition_feed?
-        links.any? do |link|
-          link.rel == 'self' and link.type == OPDS::TYPES['acquisition']
+      class Entry
+        class Link
+          Price = OPDS::Price
+          install_have_children_element 'price', OPDS::URI, '*', 'opds_price'
         end
       end
     end
