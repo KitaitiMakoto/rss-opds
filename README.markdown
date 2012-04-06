@@ -6,7 +6,7 @@ OPDS(Open Publication Distribution System) is feed
 
 [opds]:http://opds-spec.org/specs/opds-catalog-1-1
 
-Why 'RSS'? Because [class for Atom](http://apidock.com/ruby/v1_9_2_180/RSS/Atom) bundled with Ruby uses RSS namespace.
+Why "RSS" rather than "Atom"? Because [class for Atom](http://apidock.com/ruby/v1_9_2_180/RSS/Atom) bundled with Ruby uses RSS namespace.
 
 Installation
 ------------
