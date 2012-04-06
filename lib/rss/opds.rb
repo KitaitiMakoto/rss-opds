@@ -67,6 +67,10 @@ module RSS
   module OPDS
     PREFIX = 'opds'
     URI = 'http://opds-spec.org/2010/catalog'
+    TYPES = {
+      'navigation' => 'application/atom+xml;profile=opds-catalog;kind=navigation',
+      'acquisition' => 'application/atom+xml;profile=opds-catalog;kind=acquisition'
+    }
 
     class Price < Element
       include Atom::CommonModel
@@ -106,17 +110,29 @@ module RSS
 
   module Atom
     class Feed
-      class Entry
-        class Link
-          Price = OPDS::Price
-          install_have_children_element 'price', OPDS::URI, '*', 'opds_price'
-          [
-           ['facetGroup', nil],
-           ['activeFacet', [:true_other, :true_other]]
-          ].each do |name, type|
-            disp_name = "#{OPDS::PREFIX}:#{name}"
-            install_get_attribute(name, OPDS::URI, false, type, nil, disp_name)
-          end
+      class Link
+        Price = OPDS::Price
+        install_have_children_element 'price', OPDS::URI, '*', 'opds_price'
+        [
+         ['facetGroup', nil],
+         ['activeFacet', [:true_other, :true_other]]
+        ].each do |name, type|
+          disp_name = "#{OPDS::PREFIX}:#{name}"
+          install_get_attribute(name, OPDS::URI, false, type, nil, disp_name)
+          alias_method to_attr_name(name), name
+          alias_method "#{to_attr_name(name)}=", "#{name}="
+        end
+      end
+
+      def navigation_feed?
+        links.any? do |link|
+          link.rel == 'self' and link.type == OPDS::TYPES['navigation']
+        end
+      end
+
+      def acquisition_feed?
+        links.any? do |link|
+          link.rel == 'self' and link.type == OPDS::TYPES['acquisition']
         end
       end
     end
