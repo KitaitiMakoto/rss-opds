@@ -105,7 +105,6 @@ module RSS
     end
 
     BaseListener.install_class_name(URI, 'price', 'Price')
-    BaseListener.install_get_text_element(Atom::URI, 'price', 'dcterms_price')
   end
 
   module Atom
