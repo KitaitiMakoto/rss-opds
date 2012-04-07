@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["KitaitiMakoto@gmail.com"]
   gem.description   = %q{OPDS parser and maker}
   gem.summary       = %q{This gem extends Ruby bundled RSS library to parse and make OPDS catalogs}
-  gem.homepage      = ""
+  gem.homepage      = "https://gitorious.org/rss/opds"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.files         = `git ls-files`.split("\n")
