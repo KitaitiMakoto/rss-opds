@@ -15,11 +15,13 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = RSS::OPDS::VERSION
 
+  gem.add_runtime_dependency 'rss-dcterms'
+  gem.add_runtime_dependency 'rss-atom-feed_history'
+
   gem.add_development_dependency 'test-unit'
   gem.add_development_dependency 'simplecov'
   gem.add_development_dependency 'yard'
+  gem.add_development_dependency 'redcarpet'
   gem.add_development_dependency 'pry'
-
-  gem.add_runtime_dependency 'rss-dcterms'
-  gem.add_runtime_dependency 'rss-atom-feed_history'
+  gem.add_development_dependency 'pry-doc'
 end
