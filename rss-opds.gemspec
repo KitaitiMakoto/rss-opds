@@ -7,6 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{OPDS parser and maker}
   gem.summary       = %q{This gem extends Ruby bundled RSS library to parse and make OPDS catalogs}
   gem.homepage      = "http://rss-ext.rubyforge.org/"
+  gem.rubyforge_project = "http://rss-ext.rubyforge.org/"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.files         = `git ls-files`.split("\n")
