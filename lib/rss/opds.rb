@@ -138,6 +138,10 @@ module RSS
           Price = OPDS::Price
           install_have_children_element 'price', OPDS::URI, '*', 'opds_price'
         end
+
+        def price
+          links.find {|link| link.opds_price}.opds_price
+        end
       end
     end
   end
