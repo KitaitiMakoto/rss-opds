@@ -28,6 +28,15 @@ def main
       entry.updated = '2012-07-31T00:00:00'
       entry.summary = 'Popular books in this site'
     end
+    maker.items.new_item do |entry|
+      entry.links.new_link do |link|
+        link.href = 'http://example.net/new.opds'
+        link.type = RSS::OPDS::TYPES['acquisition']
+      end
+      entry.title = 'Example Popular Books'
+      entry.updated = '2012-08-14T04:23:00'
+      entry.summary = 'New books in this site'
+    end
   }
 
   puts root
@@ -36,4 +45,3 @@ end
 if $0 == __FILE__
   main
 end
-
