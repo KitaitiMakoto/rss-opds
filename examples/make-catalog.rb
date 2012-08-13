@@ -19,14 +19,14 @@ def main
     maker.channel.updated = '2012-08-14T04:23:00'
     maker.channel.author = 'KITAITI Makoto'
 
-    maker.items.new_item do |item|
-      item.links.new_link do |link|
+    maker.items.new_item do |entry|
+      entry.links.new_link do |link|
         link.href = 'http://example.net/popular.opds'
         link.type = RSS::OPDS::TYPES['acquisition']
       end
-      item.title = 'Example Popular Books'
-      item.updated = '2012-07-31T00:00:00'
-      item.summary = 'Popular books in this site'
+      entry.title = 'Example Popular Books'
+      entry.updated = '2012-07-31T00:00:00'
+      entry.summary = 'Popular books in this site'
     end
   }
 
