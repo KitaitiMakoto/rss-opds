@@ -31,8 +31,8 @@ Usage
     
     opds = RSS::Parser.parse open(uri)
     opds.entries.each do |entry|
-     price_elem = entry.links.select {|link| link.opds_price}.first
-     puts price_elem
+      price_elem = entry.links.select {|link| link.opds_price}.first
+      puts price_elem
     end
 
 If you need performance, install [rss-nokogiri][rss-nokogiri] gem and write `require 'rss/nokogiri'`
