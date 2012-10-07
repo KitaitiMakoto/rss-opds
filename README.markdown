@@ -35,6 +35,11 @@ Usage
      puts price_elem
     end
 
+If you need performance, install [rss-nokogiri][rss-nokogiri] gem and write `require 'rss/nokogiri'`
+before calling `RSS::Parser.parse`.
+
+[rss-nokogiri]: https://rubygems.org/gems/rss-nokogiri
+
 Contributing
 ------------
 
