@@ -71,6 +71,65 @@ module RSS
       'navigation' => 'application/atom+xml;profile=opds-catalog;kind=navigation',
       'acquisition' => 'application/atom+xml;profile=opds-catalog;kind=acquisition'
     }
+    REGISTERED_RELATIONS = {
+      'alternate'           => 'alternate',
+      'appendix'            => 'appendix',
+      'archives'            => 'archives',
+      'author'              => 'author',
+      'bookmark'            => 'bookmark',
+      'canonical'           => 'canonical',
+      'chapter'             => 'chapter',
+      'collection'          => 'collection',
+      'contents'            => 'contents',
+      'copyright'           => 'copyright',
+      'current'             => 'current',
+      'describedby'         => 'describedby',
+      'disclosure'          => 'disclosure',
+      'duplicate'           => 'duplicate',
+      'edit'                => 'edit',
+      'edit-media'          => 'edit-media',
+      'enclosure'           => 'enclosure',
+      'first'               => 'first',
+      'glossary'            => 'glossary',
+      'help'                => 'help',
+      'hosts'               => 'hosts',
+      'hub'                 => 'hub',
+      'icon'                => 'icon',
+      'index'               => 'index',
+      'item'                => 'item',
+      'last'                => 'last',
+      'latest-version'      => 'latest-version',
+      'license'             => 'license',
+      'lrdd'                => 'lrdd',
+      'monitor'             => 'monitor',
+      'monitor-group'       => 'monitor-group',
+      'next'                => 'next',
+      'next-archive'        => 'next-archive',
+      'nofollow'            => 'nofollow',
+      'noreferrer'          => 'noreferrer',
+      'payment'             => 'payment',
+      'predecessor-version' => 'predecessor-version',
+      'prefetch'            => 'prefetch',
+      'prev'                => 'prev',
+      'previous'            => 'previous',
+      'prev-archive'        => 'prev-archive',
+      'related'             => 'related',
+      'replies'             => 'replies',
+      'search'              => 'search',
+      'section'             => 'section',
+      'self'                => 'self',
+      'service'             => 'service',
+      'start'               => 'start',
+      'stylesheet'          => 'stylesheet',
+      'subsection'          => 'subsection',
+      'successor-version'   => 'successor-version',
+      'tag'                 => 'tag',
+      'up'                  => 'up',
+      'version-history'     => 'version-history',
+      'via'                 => 'via',
+      'working-copy'        => 'working-copy',
+      'working-copy-of'     => 'working-copy-of'
+    }
     CATALOG_RELATIONS = {
       'start'         => 'start',
       'subsection'    => 'subsection',
@@ -83,6 +142,17 @@ module RSS
       'facet'         => 'http://opds-spec.org/facet',
       'crawlable'     => 'http://opds-spec.org/crawlable'
     }
+    ENTRY_RELATIONS = {
+      'acquisition' => 'http://opds-spec.org/acquisition',
+      'open-access' => 'http://opds-spec.org/acquisition/open-access',
+      'borrow'      => 'http://opds-spec.org/acquisition/borrow',
+      'buy'         => 'http://opds-spec.org/acquisition/buy',
+      'sample'      => 'http://opds-spec.org/acquisition/sample',
+      'subscribe'   => 'http://opds-spec.org/acquisition/subscribe',
+      'image'       => 'http://opds-spec.org/image',
+      'thumbnail'   => 'http://opds-spec.org/image/thumbnail'
+    }
+    RELATIONS = REGISTERED_RELATIONS.merge(CATALOG_RELATIONS.merge(ENTRY_RELATIONS))
 
     class Price < Element
       include Atom::CommonModel

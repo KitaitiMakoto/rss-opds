@@ -22,7 +22,7 @@ def root
     end
     maker.channel.links.new_link do |link|
       link.href = 'http://example.net/root.opds'
-      link.rel = RSS::OPDS::CATALOG_RELATIONS['start']
+      link.rel = RSS::OPDS::RELATIONS['start']
       link.type = RSS::OPDS::TYPES['navigation']
     end
     maker.channel.updated = '2012-08-14T04:23:00'
@@ -31,7 +31,7 @@ def root
     maker.items.new_item do |entry|
       entry.links.new_link do |link|
         link.href = 'http://example.net/popular.opds'
-        link.rel = RSS::OPDS::CATALOG_RELATIONS['popular']
+        link.rel = RSS::OPDS::RELATIONS['popular']
         link.type = RSS::OPDS::TYPES['acquisition']
       end
       entry.title = 'Example Popular Books'
@@ -41,7 +41,7 @@ def root
     maker.items.new_item do |entry|
       entry.links.new_link do |link|
         link.href = 'http://example.net/new.opds'
-        link.rel = RSS::OPDS::CATALOG_RELATIONS['new']
+        link.rel = RSS::OPDS::RELATIONS['new']
         link.type = RSS::OPDS::TYPES['acquisition']
       end
       entry.title = 'Example New Books'
@@ -63,7 +63,7 @@ def popular
     end
     maker.channel.links.new_link do |link|
       link.href = 'http://example.net/root.opds'
-      link.rel = RSS::OPDS::CATALOG_RELATIONS['start']
+      link.rel = RSS::OPDS::RELATIONS['start']
       link.type = RSS::OPDS::TYPES['navigation']
     end
     maker.channel.updated = '2012-07-31T00:00:00'
@@ -92,7 +92,7 @@ def recent
     end
     maker.channel.links.new_link do |link|
       link.href = 'http://example.net/root.opds'
-      link.rel = RSS::OPDS::CATALOG_RELATIONS['start']
+      link.rel = RSS::OPDS::RELATIONS['start']
       link.type = RSS::OPDS::TYPES['navigation']
     end
     maker.channel.updated = '2012-08-14T04:23:00'
