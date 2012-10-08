@@ -17,7 +17,7 @@ def root
     maker.channel.description = 'Sample OPDS'
     maker.channel.links.new_link do |link|
       link.href = 'http://example.net/root.opds'
-      link.rel = 'self'
+      link.rel = RSS::OPDS::RELATIONS['self']
       link.type = RSS::OPDS::TYPES['navigation']
     end
     maker.channel.links.new_link do |link|
@@ -58,7 +58,7 @@ def popular
     maker.channel.description = 'Popular books in this site'
     maker.channel.links.new_link do |link|
       link.href = 'http://example.net/popular.opds'
-      link.rel = 'self'
+      link.rel = RSS::OPDS::RELATIONS['self']
       link.type = RSS::OPDS::TYPES['acquisition']
     end
     maker.channel.links.new_link do |link|
