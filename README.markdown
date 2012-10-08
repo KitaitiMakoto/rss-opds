@@ -2,7 +2,7 @@ RSS::OPDS
 =========
 
 [OPDS][opds] parser and maker.
-OPDS(Open Publication Distribution System) is feed
+OPDS(Open Publication Distribution System) is feed which syndicates information about ebooks.
 
 [opds]:http://opds-spec.org/specs/opds-catalog-1-1
 
@@ -26,6 +26,8 @@ Or install it yourself as:
 Usage
 -----
 
+### Parsing OPDS
+
     require 'open-uri'
     require 'rss/opds'
     
@@ -39,6 +41,26 @@ If you need performance, install [rss-nokogiri][rss-nokogiri] gem and write `req
 before calling `RSS::Parser.parse`.
 
 [rss-nokogiri]: https://rubygems.org/gems/rss-nokogiri
+
+### Making OPDS
+
+    require 'rss/opds'
+    
+    recent = RSS::Maker.make('atom') {|maker|
+      # ...
+    }
+    root = RSS::Maker.make('atom') {|maker|
+      maker.channel.about = ...
+      
+      maker.items.add_feed recent, RSS::OPDS::RELATIONS['new']
+      # equivalent to:
+      # maker.items.new_item do |item|
+      #   item.id = recent.id
+      #   item.title = recent.title
+      #   # ...
+      # end
+    }
+    puts root # => output XMl including entry with 'new' sorting relation
 
 Contributing
 ------------
