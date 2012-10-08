@@ -236,7 +236,7 @@ module RSS
       class Feed < RSSBase
         class Items
           # @todo consider whether method name is proper or not
-          def add_feed(feed, relation)
+          def add_feed(feed, relation, href=nil)
             self_link = maker.channel.links.find {|link| link.rel == RSS::OPDS::RELATIONS['self']}
             is_navigation_feed = self_link && self_link.type == RSS::OPDS::TYPES['navigation']
             raise TypeError, 'Only navigatfion feed can accept feed' unless is_navigation_feed
@@ -247,8 +247,7 @@ module RSS
                 entry.__send__("#{attr}=", val.content) if val
               end
               entry.links.new_link do |link|
-                self_link = feed.links.find {|ln| ln.rel == RSS::OPDS::RELATIONS['self']}
-                href = self_link ? self_link.href : feed.id.content
+                href = feed.links.find {|ln| ln.rel == RSS::OPDS::RELATIONS['self']}.href unless href
                 link.href = href
                 link.rel = relation
                 link.type = RSS::OPDS::TYPES['acquisition']
