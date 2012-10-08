@@ -235,6 +235,7 @@ module RSS
     module Atom
       class Feed < RSSBase
         class Items
+          # @todo consider whether method name is proper or not
           def add_feed(feed, relation)
             self_link = maker.channel.links.find {|link| link.rel == RSS::OPDS::RELATIONS['self']}
             is_navigation_feed = self_link && self_link.type == RSS::OPDS::TYPES['navigation']
