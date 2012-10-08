@@ -60,7 +60,7 @@ before calling `RSS::Parser.parse`.
       #   # ...
       # end
     }
-    puts root # => output XMl including entry with 'new' sorting relation
+    puts root # => output XML including entry with 'new' sorting relation
 
 Contributing
 ------------
