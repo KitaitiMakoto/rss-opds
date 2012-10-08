@@ -71,6 +71,18 @@ module RSS
       'navigation' => 'application/atom+xml;profile=opds-catalog;kind=navigation',
       'acquisition' => 'application/atom+xml;profile=opds-catalog;kind=acquisition'
     }
+    CATALOG_RELATIONS = {
+      'start'         => 'start',
+      'subsection'    => 'subsection',
+      'new'           => 'http://opds-spec.org/sort/new',
+      'popular'       => 'http://opds-spec.org/sort/popular',
+      'featured'      => 'http://opds-spec.org/featured',
+      'recommended'   => 'http://opds-spec.org/recommended',
+      'shelf'         => 'http://opds-spec.org/shelf',
+      'subscriptions' => 'http://opds-spec.org/subscriptions',
+      'facet'         => 'http://opds-spec.org/facet',
+      'crawlable'     => 'http://opds-spec.org/crawlable'
+    }
 
     class Price < Element
       include Atom::CommonModel
