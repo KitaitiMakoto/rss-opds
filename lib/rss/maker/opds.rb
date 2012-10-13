@@ -9,21 +9,37 @@ module RSS
           class Item < ItemBase
             class Links < LinksBase
               class Link < LinkBase
-                def_classed_elements 'price', 'value'
+                %w[facetGroup activeFacet].each do |attr|
+                  # attr_accessor attr, Utils.to_attr_name(attr)
+                  # add_need_initialize_variable attr
+                  def_other_element attr
+                end
+                def_classed_elements 'opds_price', 'value', 'Prices'
+                def setup_opds_prices(feed, current)
+                  # noop
+                end
+
+                # Should provide this method as the one of a module
+                def to_feed(feed, current)
+                  super # AtomLink#to_feed
+                  opds_prices.to_feed(feed, current.links.last)
+                end
 
                 class Prices < Base
-                  def_array_element 'price'
-                  add_other_element 'price'
+                  def_array_element 'opds_price', nil, 'Price'
 
                   class Price < Base
-                    attr_accessor :value, :currencycode
-                    add_need_initialize_variable :value, :currencycode
+                    %w[value currencycode].each do |attr|
+                      attr_accessor attr
+                    end
 
                     def to_feed(feed, current)
-                      price = current.class::Link::Price.new
-                      setup_values price
-
-
+                      price = ::RSS::OPDS::Price.new
+                      price.value = value
+                      price.currencycode = currencycode
+                      current.opds_prices << price
+                      set_parent price, current
+                      setup_other_elements(feed)
                     end
 
                     private
