@@ -216,6 +216,9 @@ module RSS
           alias_method to_attr_name(name), name
           alias_method "#{to_attr_name(name)}=", "#{name}="
         end
+
+        Price = OPDS::Price
+        install_have_children_element 'opds_price', OPDS::URI, '*'
       end
 
       class Entry
