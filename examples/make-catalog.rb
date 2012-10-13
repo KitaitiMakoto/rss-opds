@@ -1,5 +1,6 @@
 require 'rss'
 require 'rss/opds'
+require 'rss/maker/opds'
 
 Book = Struct.new 'Book',
                   :title, :author, :summary, :updated, :link, :popularity
@@ -103,7 +104,14 @@ def recent
         entry.title = book.title
         entry.updated = book.updated
         entry.summary = book.summary
-        entry.link = book.link
+
+        entry.links.new_link do |link|
+          link.href = book.link
+          link.opds_prices.new_opds_price do |price|
+            price.value = 100
+            price.currencycode = 'JPY'
+          end
+        end
       end
     end
   end
