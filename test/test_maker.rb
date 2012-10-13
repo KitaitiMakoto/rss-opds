@@ -89,7 +89,7 @@ puts feed
     # test Maker::Atom::Feed::Items#add_root_link
     pend
   end
-  
+
   def root
     RSS::Maker.make('atom') {|maker|
       maker.channel.about = 'http://example.net/'
