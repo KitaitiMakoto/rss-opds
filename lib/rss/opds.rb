@@ -206,7 +206,7 @@ module RSS
         end
       end
 
-      class Link
+      class Link < Element
         [
          ['facetGroup', nil],
          ['activeFacet', [:true_other, :true_other]]
