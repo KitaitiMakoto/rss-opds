@@ -6,6 +6,7 @@ end
 require 'rss/opds'
 require 'test/unit'
 require 'pathname'
+require 'rexml/document'
 
 class TestOPDS < Test::Unit::TestCase
   def setup

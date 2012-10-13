@@ -1,9 +1,68 @@
 require_relative 'helper'
+require 'rss/maker/opds'
 
 class TestMaker < TestOPDS
+  def test_set_price
+    feed = RSS::Maker.make('atom') {|maker|
+      %w[id author title].each do |property|
+        maker.channel.send "#{property}=", property
+      end
+      maker.channel.updated = Time.now
+
+      maker.items.new_item do |entry|
+        entry.id = 'entry id'
+        entry.title = 'entry title'
+        entry.author = 'entry author'
+        entry.updated = Time.now
+
+        entry.links.new_link do |link|
+          link.href = 'uri/to/purchase'
+          link.opds_prices.new_opds_price do |price|
+            price.value = 100
+            price.currencycode = 'JPY'
+          end
+        end
+      end
+    }
+    doc = REXML::Document.new(feed.to_s)
+    assert_not_empty REXML::XPath.match(doc, "//*[namespace-uri()='http://opds-spec.org/2010/catalog']")
+  end
+
+  def test_set_active_facet
+    feed = RSS::Maker.make('atom') {|maker|
+      %w[id author title].each do |property|
+        maker.channel.send "#{property}=", property
+      end
+      maker.channel.updated = Time.now
+
+      maker.items.new_item do |entry|
+        entry.id = 'entry id'
+        entry.title = 'entry title'
+        entry.author = 'entry author'
+        entry.updated = Time.now
+
+        entry.links.new_link do |link|
+          link.href = 'uri/to/facet'
+          link.activeFacet = true
+        end
+      end
+    }
+
+puts feed
+
+    doc = REXML::Document.new(feed.to_s)
+    assert false
+  end
+
+  def test_set_negative_facet
+    # negative(not have "true" value) facet element shoud not present in document
+    assert false
+  end
+
   def test_navigation_feed_accepts_aqcuisition_feed_as_item
+    catalog_root = nil
     assert_nothing_raised do
-      RSS::Maker.make('atom') {|maker|
+      catalog_root = RSS::Maker.make('atom') {|maker|
         maker.channel.about = 'http://example.net/'
         maker.channel.title = 'Example Catalog Root'
         maker.channel.description = 'Sample OPDS'
@@ -21,8 +80,14 @@ class TestMaker < TestOPDS
         maker.channel.author = 'KITAITI Makoto'
 
         maker.items.add_feed recent, RSS::OPDS::RELATIONS['new']
+        # maker.items.add_new recent
       }
     end
+  end
+
+  def test_utility_to_add_link_to_catalog_root
+    # test Maker::Atom::Feed::Items#add_root_link
+    pend
   end
   
   def root
