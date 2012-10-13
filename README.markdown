@@ -44,11 +44,40 @@ before calling `RSS::Parser.parse`.
 
 ### Making OPDS
 
+You may make OPDS feeds as well as normal Atom feeds.
+
     require 'rss/opds'
     
-    recent = RSS::Maker.make('atom') {|maker|
-      # ...
-    }
+    recent = RSS::Maker.make('atom') do |maker|
+      maker.channel.about = 'http://example.net/'
+      maker.channel.title = 'Example New Catalog'
+      maker.channel.description = 'New books in this site'
+      maker.channel.links.new_link do |link|
+        link.href = 'http://example.net/new.opds'
+        link.rel = 'self'
+        link.type = RSS::OPDS::TYPES['acquisition']
+      end
+      maker.channel.links.new_link do |link|
+        link.href = 'http://example.net/root.opds'
+        link.rel = RSS::OPDS::RELATIONS['start']
+        link.type = RSS::OPDS::TYPES['navigation']
+      end
+      maker.channel.updated = '2012-08-14T04:23:00'
+      maker.channel.author = 'KITAITI Makoto'
+    
+      new_books.each do |book|
+        maker.items.new_item do |entry|
+          entry.title = book.title
+          entry.updated = book.updated
+          entry.summary = book.summary
+          entry.link = book.link
+        end
+      end
+    end
+    puts recent # => output Atom feed
+
+And now, this library provides utility methods which help you make OPDS navigation feeds.
+
     root = RSS::Maker.make('atom') {|maker|
       maker.channel.about = ...
       
@@ -61,6 +90,8 @@ before calling `RSS::Parser.parse`.
       # end
     }
     puts root # => output XML including entry with 'new' sorting relation
+
+`maker.items.add_feed` is experimental method name. It will be modified in the future.
 
 Contributing
 ------------
