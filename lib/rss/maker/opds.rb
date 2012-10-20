@@ -52,12 +52,7 @@ module RSS
             end
           end
 
-          def add_root_link(href)
-            raise NotImplementedError
-          end
-
-          # @todo consider whether method name is proper or not
-          def add_feed(feed, relation, href=nil)
+          def add_relation(feed, relation, href=nil)
             self_link = maker.channel.links.find {|link| link.rel == RSS::OPDS::RELATIONS['self']}
             is_navigation_feed = self_link && self_link.type == RSS::OPDS::TYPES['navigation']
             raise TypeError, 'Only navigatfion feed can accept feed' unless is_navigation_feed
