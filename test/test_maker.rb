@@ -96,10 +96,14 @@ class TestMaker < TestOPDS
         maker.channel.updated = '2012-08-14T05:30:00'
         maker.channel.author = 'KITAITI Makoto'
 
-        maker.items.add_feed recent, RSS::OPDS::RELATIONS['new']
-        # maker.items.add_new recent
+        maker.items.add_relation recent, RSS::OPDS::RELATIONS['new']
+        maker.items.add_popular popular
       }
     end
+    doc = REXML::Document.new(catalog_root.to_s)
+    links = REXML::XPath.match(doc, "/feed/entry/link")
+    assert_equal 'http://opds-spec.org/sort/new', links.first.attributes['rel']
+    assert_equal 'http://opds-spec.org/sort/popular', links[1].attributes['rel']
   end
 
   def test_utility_to_add_link_to_catalog_root
