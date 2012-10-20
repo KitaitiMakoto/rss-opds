@@ -5,13 +5,13 @@ require 'rss/opds/version'
 
 module RSS
   module Utils
-    module TrueOther
+    module TrueNil
       module_function
       def parse(value)
         if value === true
           value
         else
-          /\Atrue\z/i.match(value.to_s) ? true : false
+          /\Atrue\z/i.match(value.to_s) ? true : nil
         end
       end
     end
@@ -19,22 +19,23 @@ module RSS
 
   module BaseModel
     private
-    def true_other_attr_reader(*attrs)
+
+    def true_nil_attr_reader(*attrs)
       attrs.each do |attr|
         attr = attr.id2name if attr.kind_of?(Integer)
         module_eval(<<-EOC, __FILE__, __LINE__ + 1)
           attr_reader(:#{attr})
           def #{attr}?
-            TrueOther.parse(@#{attr})
+            TrueNil.parse(@#{attr})
           end
         EOC
       end
     end
 
-    def true_other_writer(name, disp_name=name)
+    def true_nil_writer(name, disp_name=name)
       module_eval(<<-EOC, __FILE__, __LINE__ + 1)
         def #{name}=(new_value)
-          new_value = 'true' if new_value === true
+          new_value = [true, 'true'].include?(new_value) ? 'true' : nil
           @#{name} = new_value
         end
       EOC
@@ -46,8 +47,9 @@ module RSS
       alias rss_def_corresponded_attr_writer def_corresponded_attr_writer
       def def_corresponded_attr_writer(name, type=nil, disp_name=nil)
         disp_name ||= name
-        if type == :true_other
-          true_other_writer name, disp_name
+        case type
+        when :true_nil
+          true_nil_writer name, disp_name
         else
           rss_def_corresponded_attr_writer name, type, disp_name
         end
@@ -55,8 +57,9 @@ module RSS
 
       alias rss_def_corresponded_attr_reader def_corresponded_attr_reader
       def def_corresponded_attr_reader(name, type=nil)
-        if type == :true_other
-          true_other_attr_reader name, type
+        case type
+        when :true_nil
+          true_nil_attr_reader name, type
         else
           rss_def_corresponded_attr_reader name, type
         end
@@ -206,7 +209,7 @@ module RSS
       class Link < Element
         [
          ['facetGroup', nil],
-         ['activeFacet', [:true_other, :true_other]]
+         ['activeFacet', [:true_nil, :true_nil]]
         ].each do |name, type|
           disp_name = "#{OPDS::PREFIX}:#{name}"
           install_get_attribute(name, OPDS::URI, false, type, nil, disp_name)
