@@ -74,64 +74,67 @@ module RSS
       'navigation' => 'application/atom+xml;profile=opds-catalog;kind=navigation',
       'acquisition' => 'application/atom+xml;profile=opds-catalog;kind=acquisition'
     }
-    REGISTERED_RELATIONS = {
-      'alternate'           => 'alternate',
-      'appendix'            => 'appendix',
-      'archives'            => 'archives',
-      'author'              => 'author',
-      'bookmark'            => 'bookmark',
-      'canonical'           => 'canonical',
-      'chapter'             => 'chapter',
-      'collection'          => 'collection',
-      'contents'            => 'contents',
-      'copyright'           => 'copyright',
-      'current'             => 'current',
-      'describedby'         => 'describedby',
-      'disclosure'          => 'disclosure',
-      'duplicate'           => 'duplicate',
-      'edit'                => 'edit',
-      'edit-media'          => 'edit-media',
-      'enclosure'           => 'enclosure',
-      'first'               => 'first',
-      'glossary'            => 'glossary',
-      'help'                => 'help',
-      'hosts'               => 'hosts',
-      'hub'                 => 'hub',
-      'icon'                => 'icon',
-      'index'               => 'index',
-      'item'                => 'item',
-      'last'                => 'last',
-      'latest-version'      => 'latest-version',
-      'license'             => 'license',
-      'lrdd'                => 'lrdd',
-      'monitor'             => 'monitor',
-      'monitor-group'       => 'monitor-group',
-      'next'                => 'next',
-      'next-archive'        => 'next-archive',
-      'nofollow'            => 'nofollow',
-      'noreferrer'          => 'noreferrer',
-      'payment'             => 'payment',
-      'predecessor-version' => 'predecessor-version',
-      'prefetch'            => 'prefetch',
-      'prev'                => 'prev',
-      'previous'            => 'previous',
-      'prev-archive'        => 'prev-archive',
-      'related'             => 'related',
-      'replies'             => 'replies',
-      'search'              => 'search',
-      'section'             => 'section',
-      'self'                => 'self',
-      'service'             => 'service',
-      'start'               => 'start',
-      'stylesheet'          => 'stylesheet',
-      'subsection'          => 'subsection',
-      'successor-version'   => 'successor-version',
-      'tag'                 => 'tag',
-      'up'                  => 'up',
-      'version-history'     => 'version-history',
-      'via'                 => 'via',
-      'working-copy'        => 'working-copy',
-      'working-copy-of'     => 'working-copy-of'
+    REGISTERED_RELATIONS = %w[
+      alternate
+      appendix
+      archives
+      author
+      bookmark
+      canonical
+      chapter
+      collection
+      contents
+      copyright
+      current
+      describedby
+      disclosure
+      duplicate
+      edit
+      edit-media
+      enclosure
+      first
+      glossary
+      help
+      hosts
+      hub
+      icon
+      index
+      item
+      last
+      latest-version
+      license
+      lrdd
+      monitor
+      monitor-group
+      next
+      next-archive
+      nofollow
+      noreferrer
+      payment
+      predecessor-version
+      prefetch
+      prev
+      previous
+      prev-archive
+      related
+      replies
+      search
+      section
+      self
+      service
+      start
+      stylesheet
+      subsection
+      successor-version
+      tag
+      up
+      version-history
+      via
+      working-copy
+      working-copy-of
+    ].reduce({}) {|relations, relation|
+      relations[relation] = relation
+      relations
     }
     CATALOG_RELATIONS = {
       'start'         => 'start',
