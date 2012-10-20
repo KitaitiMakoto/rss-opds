@@ -74,7 +74,7 @@ You may make OPDS feeds as well as normal Atom feeds.
         end
       end
     end
-    puts recent # => output Atom feed
+    puts recent # => output OPDS feed
 
 And now, this library provides utility methods which help you make OPDS navigation feeds.
 
