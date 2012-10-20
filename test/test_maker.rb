@@ -51,7 +51,9 @@ class TestMaker < TestOPDS
 puts feed
 
     doc = REXML::Document.new(feed.to_s)
-    assert false
+    links = REXML::XPath.match(doc, "//[@opds:activeFacet]")
+    assert_not_empty links
+    assert_equal 'true', links.first.attributes['opds:activeFacet']
   end
 
   def test_set_negative_facet
