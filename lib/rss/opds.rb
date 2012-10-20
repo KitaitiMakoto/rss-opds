@@ -159,11 +159,11 @@ module RSS
 
     class Price < Element
       include Atom::CommonModel
-      include Atom::ContentModel
 
       install_ns(PREFIX, URI)
       install_must_call_validator('opds', URI)
       install_get_attribute('currencycode', '')
+      attr_accessor :value
 
       class << self
         def required_prefix
@@ -184,9 +184,6 @@ module RSS
       def full_name
         tag_name_with_prefix(PREFIX)
       end
-
-      alias value content
-      alias value= content=
     end
 
     BaseListener.install_class_name(URI, 'price', 'Price')
