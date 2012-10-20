@@ -70,6 +70,12 @@ module RSS
               end
             end
           end
+
+          ::RSS::OPDS::CATALOG_RELATIONS.each_pair do |type, uri|
+            define_method "add_#{type}" do |feed, href=nil|
+              add_relation feed, uri, href
+            end
+          end
         end
       end
     end
