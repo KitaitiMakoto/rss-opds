@@ -10,8 +10,6 @@ module RSS
             class Links < LinksBase
               class Link < LinkBase
                 %w[facetGroup activeFacet].each do |attr|
-                  # attr_accessor attr, Utils.to_attr_name(attr)
-                  # add_need_initialize_variable attr
                   def_other_element attr
                 end
                 def_classed_elements 'opds_price', 'value', 'Prices'
