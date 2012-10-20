@@ -13,11 +13,12 @@ module RSS
                   def_other_element attr
                 end
                 def_classed_elements 'opds_price', 'value', 'Prices'
+
+                # @note Defined to prevent NoMethodError
                 def setup_opds_prices(feed, current)
-                  # noop
                 end
 
-                # Should provide this method as the one of a module
+                # @note Should provide this method as the one of a module
                 def to_feed(feed, current)
                   super # AtomLink#to_feed
                   opds_prices.to_feed(feed, current.links.last)
