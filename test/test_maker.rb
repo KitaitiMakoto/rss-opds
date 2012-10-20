@@ -47,9 +47,6 @@ class TestMaker < TestOPDS
         end
       end
     }
-
-puts feed
-
     doc = REXML::Document.new(feed.to_s)
     links = REXML::XPath.match(doc, "//[@opds:activeFacet]")
     assert_not_empty links
