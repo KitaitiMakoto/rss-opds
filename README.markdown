@@ -80,9 +80,12 @@ And now, this library provides utility methods which help you make OPDS navigati
 
     root = RSS::Maker.make('atom') {|maker|
       maker.channel.about = ...
-      
-      maker.items.add_feed recent, RSS::OPDS::RELATIONS['new']
-      # equivalent to:
+    
+      maker.items.add_relation recent, RSS::OPDS::RELATIONS['new']
+      # or just:
+      # maker.items.add_new recent
+      # 
+      # these are equivalent to:
       # maker.items.new_item do |item|
       #   item.id = recent.id
       #   item.title = recent.title
@@ -90,8 +93,6 @@ And now, this library provides utility methods which help you make OPDS navigati
       # end
     }
     puts root # => output XML including entry with 'new' sorting relation
-
-`maker.items.add_feed` is experimental method name. It will be modified in the future.
 
 Contributing
 ------------
@@ -105,10 +106,10 @@ Contributing
 Development Plan
 ----------------
 
-1. Parser for OPDS catalogs
+1. Parser for OPDS catalogs[DONE]
 2. Validation as OPDS
 3. Utility methods like, for example, `#buy`(gets `link` element with `rel="acquisition/buy"`), `#price`(`opds:price` element) and so on
-4. Maker for OPDS feeds and entries
+4. Maker for OPDS feeds and entries[DONE]
 
 References
 ----------
