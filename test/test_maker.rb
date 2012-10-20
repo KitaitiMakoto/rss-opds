@@ -53,9 +53,27 @@ class TestMaker < TestOPDS
     assert_equal 'true', links.first.attributes['opds:activeFacet']
   end
 
-  def test_set_negative_facet
-    # negative(not have "true" value) facet element shoud not present in document
-    assert false
+  def test_set_inactive_facet
+    feed = RSS::Maker.make('atom') {|maker|
+      %w[id author title].each do |property|
+        maker.channel.send "#{property}=", property
+      end
+      maker.channel.updated = Time.now
+
+      maker.items.new_item do |entry|
+        entry.id = 'entry id'
+        entry.title = 'entry title'
+        entry.author = 'entry author'
+        entry.updated = Time.now
+
+        entry.links.new_link do |link|
+          link.href = 'uri/to/facet'
+          link.activeFacet = false
+        end
+      end
+    }
+    doc = REXML::Document.new(feed.to_s)
+    assert_empty REXML::XPath.match(doc, "//[@opds:activeFacet]")
   end
 
   def test_navigation_feed_accepts_aqcuisition_feed_as_item
