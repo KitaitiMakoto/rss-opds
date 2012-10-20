@@ -106,8 +106,7 @@ class TestMaker < TestOPDS
     assert_equal 'http://opds-spec.org/sort/popular', links[1].attributes['rel']
   end
 
-  def test_utility_to_add_link_to_catalog_root
-    # test Maker::Atom::Feed::Items#add_root_link
+  def test_utility_to_add_entry_relations
     pend
   end
 
