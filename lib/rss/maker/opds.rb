@@ -3,51 +3,64 @@ require 'rss/opds'
 
 module RSS
   module Maker
+    module OPDS
+      module LinkBase
+        class << self
+          def included(base)
+            super
+            base.class_eval(<<-EOC, __FILE__, __LINE__ + 1)
+              %w[facetGroup activeFacet].each do |attr|
+                def_other_element attr
+              end
+              def_classed_elements 'opds_price', 'value', 'Prices'
+
+              # @note Defined to prevent NoMethodError
+              def setup_opds_prices(feed, current)
+              end
+
+              # @note Should provide this method as the one of a module
+              def to_feed(feed, current)
+                super # AtomLink#to_feed
+                opds_prices.to_feed(feed, current.links.last)
+              end
+            EOC
+          end
+        end
+
+        class Prices < Base
+          def_array_element 'opds_price', nil, 'Price'
+
+          class Price < Base
+            %w[value currencycode].each do |attr|
+              attr_accessor attr
+            end
+
+            def to_feed(feed, current)
+              price = ::RSS::OPDS::Price.new
+              price.value = value
+              price.currencycode = currencycode
+              current.opds_prices << price
+              set_parent price, current
+              setup_other_elements(feed)
+            end
+
+            private
+
+            def required_variable_names
+              %w[currencycode]
+            end
+          end
+        end
+      end
+    end
+
     module Atom
       class Feed < RSSBase
         class Items < ItemsBase
           class Item < ItemBase
             class Links < LinksBase
               class Link < LinkBase
-                %w[facetGroup activeFacet].each do |attr|
-                  def_other_element attr
-                end
-                def_classed_elements 'opds_price', 'value', 'Prices'
-
-                # @note Defined to prevent NoMethodError
-                def setup_opds_prices(feed, current)
-                end
-
-                # @note Should provide this method as the one of a module
-                def to_feed(feed, current)
-                  super # AtomLink#to_feed
-                  opds_prices.to_feed(feed, current.links.last)
-                end
-
-                class Prices < Base
-                  def_array_element 'opds_price', nil, 'Price'
-
-                  class Price < Base
-                    %w[value currencycode].each do |attr|
-                      attr_accessor attr
-                    end
-
-                    def to_feed(feed, current)
-                      price = ::RSS::OPDS::Price.new
-                      price.value = value
-                      price.currencycode = currencycode
-                      current.opds_prices << price
-                      set_parent price, current
-                      setup_other_elements(feed)
-                    end
-
-                    private
-
-                    def required_variable_names
-                      %w[currencycode]
-                    end
-                  end
-                end
+                include OPDS::LinkBase
               end
             end
           end
