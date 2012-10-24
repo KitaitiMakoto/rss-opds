@@ -18,7 +18,6 @@ module RSS
               def setup_opds_prices(feed, current)
               end
 
-              # @note Should provide this method as the one of a module
               def to_feed(feed, current)
                 super # AtomLink#to_feed
                 opds_prices.to_feed(feed, current.links.last)
