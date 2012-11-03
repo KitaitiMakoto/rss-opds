@@ -197,6 +197,7 @@ class TestMaker < TestOPDS
       end
       maker.channel.updated = '2012-08-14T04:23:00'
       maker.channel.author = 'KITAITI Makoto'
+      maker.channel.rights = 'Copyright (c) 2012, KITAITI Makoto'
 
       new_books.each do |book|
         maker.items.new_item do |entry|
