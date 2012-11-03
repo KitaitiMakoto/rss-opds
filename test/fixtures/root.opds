@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:opds="http://opds-spec.org/2010/catalog">
+  <author>
+    <name>KITAITI Makoto</name>
+  </author>
+  <id>http://example.net/</id>
+  <link href="http://example.net/root.opds"
+    rel="self"
+    type="application/atom+xml;profile=opds-catalog;kind=navigation"/>
+  <link href="http://example.net/root.opds"
+    rel="start"
+    type="application/atom+xml;profile=opds-catalog;kind=navigation"/>
+  <subtitle>Sample OPDS</subtitle>
+  <title>Example Catalog Root</title>
+  <updated>2012-08-14T04:23:00+09:00</updated>
+  <entry>
+    <id>http://example.net/popular.opds</id>
+    <link href="http://example.net/popular.opds"
+      type="application/atom+xml;profile=opds-catalog;kind=acquisition"/>
+    <summary>Popular books in this site</summary>
+    <title>Example Popular Books</title>
+    <updated>2012-07-31T00:00:00+09:00</updated>
+    <dc:date>2012-07-31T00:00:00+09:00</dc:date>
+    <dcterms:date>2012-07-31T00:00:00+09:00</dcterms:date>
+  </entry>
+  <entry>
+    <id>http://example.net/new.opds</id>
+    <link href="http://example.net/new.opds"
+      type="application/atom+xml;profile=opds-catalog;kind=acquisition"/>
+    <summary>New books in this site</summary>
+    <title>Example New Books</title>
+    <updated>2012-08-14T04:23:00+09:00</updated>
+    <dc:date>2012-08-14T04:23:00+09:00</dc:date>
+    <dcterms:date>2012-08-14T04:23:00+09:00</dcterms:date>
+  </entry>
+  <dc:date>2012-08-14T04:23:00+09:00</dc:date>
+  <dcterms:date>2012-08-14T04:23:00+09:00</dcterms:date>
+</feed>

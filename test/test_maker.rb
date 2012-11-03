@@ -106,6 +106,35 @@ class TestMaker < TestOPDS
     assert_equal 'http://opds-spec.org/sort/popular', links[1].attributes['rel']
   end
 
+  def test_add_relation_returns_item
+    catalog_root = nil
+    assert_nothing_raised do
+      catalog_root = RSS::Maker.make('atom') {|maker|
+        maker.channel.about = 'http://example.net/'
+        maker.channel.title = 'Example Catalog Root'
+        maker.channel.description = 'Sample OPDS'
+        maker.channel.links.new_link do |link|
+          link.href = 'http://example.net/root.opds'
+          link.rel = RSS::OPDS::RELATIONS['self']
+          link.type = RSS::OPDS::TYPES['navigation']
+        end
+        maker.channel.links.new_link do |link|
+          link.href = 'http://example.net/root.opds'
+          link.rel = RSS::OPDS::RELATIONS['start']
+          link.type = RSS::OPDS::TYPES['navigation']
+        end
+        maker.channel.updated = '2012-08-14T05:30:00'
+        maker.channel.author = 'KITAITI Makoto'
+
+        entry = maker.items.add_relation recent, RSS::OPDS::RELATIONS['new']
+        entry.content.content = 'Overwritten entry content'
+      }
+    end
+    doc = REXML::Document.new(catalog_root.to_s)
+    links = REXML::XPath.match(doc, "/feed/entry/content")
+    assert_equal 'Overwritten entry content', links.first.text
+  end
+
   def test_utility_to_add_entry_relations
     pend
   end
