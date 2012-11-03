@@ -158,10 +158,7 @@ module RSS
       'image'       => 'http://opds-spec.org/image',
       'thumbnail'   => 'http://opds-spec.org/image/thumbnail'
     }
-    RELATIONS = Hash.new {|h, k|
-      ENTRY_RELATIONS[k] or CATALOG_RELATIONS[k] or REGISTERED_RELATIONS[k] or
-        raise KeyError, "Unsupported relation type: #{k.inspect}"
-    }
+    RELATIONS = [REGISTERED_RELATIONS, CATALOG_RELATIONS, ENTRY_RELATIONS].reduce({}) {|merged, relations| merged.merge(relations)}
 
     class Price < Element
       include Atom::CommonModel
