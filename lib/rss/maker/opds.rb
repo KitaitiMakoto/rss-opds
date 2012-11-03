@@ -70,15 +70,39 @@ module RSS
             raise TypeError, 'Only navigatfion feed can accept feed' unless is_navigation_feed
             raise ArgumentError, 'Only acquisition feed can be accepted' unless feed.acquisition_feed?
             new_item do |entry|
-              [:id, :title, :dc_description, :updated].each do |attr|
+              [:id, :title, :dc_description, :updated, :rights].each do |attr|
                 val = feed.__send__(attr)
                 entry.__send__("#{attr}=", val.content) if val
               end
+              [:author, :contributor].each do |attr_name|
+                plural ||= "#{attr_name}s"
+                feed.__send__(plural).each do |val|
+                  entry.__send__(plural).__send__("new_#{attr_name}") do |attr_maker|
+                    [:name, :uri, :email].each do |elem|
+                      attr_val = val.__send__(elem)
+                      attr_maker.__send__("#{elem}=", attr_val)
+                    end
+                  end
+                end
+              end
+              feed.categories.each do |cat|
+                entry.categories.new_category do |cat_maker|
+                  [:term, :scheme, :label].each do |xml_attr|
+                    val = cat.__send__(xml_attr)
+                    cat_maker.__send__("#{xml_attr}=", val)
+                  end
+                end
+              end
+              entry.content.content ||= feed.dc_description || feed.title.content
+
               entry.links.new_link do |link|
                 href = feed.links.find {|ln| ln.rel == RSS::OPDS::RELATIONS['self']}.href unless href
                 link.href = href
                 link.rel = relation
                 link.type = RSS::OPDS::TYPES['acquisition']
+                link.title = feed.title.content
+                link.hreflang = feed.lang || feed.dc_language
+                # Skip "length" attribute because it is for "enclosure" relation and maybe feed here doesn't have it.
               end
 
               entry

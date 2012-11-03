@@ -212,6 +212,7 @@ class TestMaker < TestOPDS
   def recent
     RSS::Maker.make('atom') do |maker|
       maker.channel.about = 'http://example.net/'
+      maker.channel.language = 'en'
       maker.channel.title = 'Example New Catalog'
       maker.channel.description = 'New books in this site'
       maker.channel.links.new_link do |link|
