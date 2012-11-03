@@ -80,6 +80,8 @@ module RSS
                 link.rel = relation
                 link.type = RSS::OPDS::TYPES['acquisition']
               end
+
+              entry
             end
           end
 
