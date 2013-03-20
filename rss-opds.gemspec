@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'rss-atom-feed_history'
   gem.add_runtime_dependency 'money'
 
+  gem.add_development_dependency 'rake'
   gem.add_development_dependency 'test-unit'
   gem.add_development_dependency 'simplecov'
   gem.add_development_dependency 'yard'
