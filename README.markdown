@@ -94,10 +94,15 @@ And now, this library provides utility methods which help you make OPDS navigati
     }
     puts root # => output XML including entry with 'new' sorting relation
 
+Examples
+--------
+For more examples, see files in `examples` directory.
+
 Changelog
 ---------
 ### 0.0.3
-* Add sample script 'examples/build-catalog-from-epub.rb' which build OPDS catalog feed using specified EPUB files.
+* Add sample script 'examples/build-catalog-from-epub.rb' which build OPDS catalog feed using specified EPUB files
+* Add sample server 'examples/opds_server.ru' for Rack
 
 Contributing
 ------------
