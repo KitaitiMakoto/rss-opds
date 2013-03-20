@@ -53,8 +53,9 @@ def make_entry(file, maker)
   maker.items.new_item do |entry|
     entry.id = book.metadata.unique_identifier.content
     entry.title = book.title
-    entry.updated = Time.parse(book.metadata.dates.first.content)
     entry.summary = book.metadata.descriptions.join(' ')
+    updated = book.metadata.dates.first
+    entry.updated = updated ? updated.content : File.mtime(file)
   end
 end
 
