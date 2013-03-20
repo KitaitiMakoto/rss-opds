@@ -7,7 +7,7 @@
 require 'rss'
 require 'rss/opds'
 require 'rss/maker/opds'
-require 'epub/parser' # You need to 'gem install epub-parser' if you don't have it
+require 'epub/parser' # You need to exec 'gem install epub-parser' if you don't have it
 
 def main
   if ARGV.empty?
