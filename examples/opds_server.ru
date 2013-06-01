@@ -3,6 +3,7 @@
 #
 # If required gems are not installed, you need exec:
 #   $ gem install rack epub-parser
+require 'pathname'
 require 'rack'
 require 'epub/parser'
 require 'rss/maker/opds'
@@ -17,7 +18,7 @@ class OPDSServer
 
   def initialize(dir='.', options={})
     raise "Not a directory: #{dir}" unless File.directory? dir
-    @dir, @options = dir, OPTIONS.merge(options)
+    @dir, @options = Pathname(dir), OPTIONS.merge(options)
     $stderr.puts "Provides OPDS for EPUB files in #{@dir}"
   end
 
@@ -53,8 +54,14 @@ class OPDSServer
             entry.id = book.unique_identifier.content
             entry.title = book.title
             entry.summary = book.description
-            updated = book.date
-            entry.updated = updated ? updated.content : File.mtime(path)
+            uri_path = Pathname(path).relative_path_from(@dir)
+            entry.links.new_link do |link|
+              link.rel  = RSS::OPDS::RELATIONS['acquisition']
+              link.href = @request.base_url + '/' + ERB::Util.url_encode(uri_path.to_path)
+              link.type = 'application/epub+zip'
+            end
+            updated = Time.parse(book.date.content) rescue nil
+            entry.updated = updated || File.mtime(path)
           end
         rescue => error
           $stderr.puts error
