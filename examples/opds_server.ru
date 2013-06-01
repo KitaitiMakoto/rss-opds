@@ -76,4 +76,7 @@ class OPDSServer
   end
 end
 
-run OPDSServer.new(ENV['DOCUMENT_ROOT'])
+docroot = ENV['DOCUMENT_ROOT']
+run Rack::Cascade.new(
+  [Rack::File.new(docroot),
+   OPDSServer.new(docroot)])
