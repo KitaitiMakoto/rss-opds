@@ -1,10 +1,8 @@
-# Replace directory name at bottom of this file with your directory which has EPUB books
-# 
 # Usage
-#   rackup examples/opds_server.ru
+#   $ DOCUMENT_ROOT=path/to/doc/root rackup examples/opds_server.ru
 #
 # If required gems are not installed, you need exec:
-#   gem install rack epub-parser
+#   $ gem install rack epub-parser
 require 'rack'
 require 'epub/parser'
 require 'rss/maker/opds'
@@ -71,5 +69,4 @@ class OPDSServer
   end
 end
 
-# Replace argument with directory which has EPUB files
-run OPDSServer.new("#{Dir.home}/Documents/Books")
+run OPDSServer.new(ENV['DOCUMENT_ROOT'])
