@@ -11,7 +11,7 @@ require 'rss/maker/opds'
 class OPDSServer
   OPTIONS = {
     :title       => 'My EPUB Books',
-    :description => 'This is an example server that serve OPDS includes info of EPUB files in a directory.',
+    :description => 'This is an example server that serves OPDS includeing information of EPUB files in a directory.',
     :author      => `whoami`.chomp,
     :generator   => self.to_s
   }
