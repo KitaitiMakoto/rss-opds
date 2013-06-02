@@ -17,9 +17,11 @@ class OPDSServer
   }
 
   def initialize(dir='.', options={})
-    raise "Not a directory: #{dir}" unless File.directory? dir
-    @dir, @options = Pathname(dir), OPTIONS.merge(options)
-    $stderr.puts "Provides OPDS for EPUB files in #{@dir}"
+    raise "Document root not given. Usage: DOCUMENT_ROOT=path/to/docroot rackup #{__FILE__}" unless dir
+    @dir = Pathname(dir)
+    raise "Not a directory: #{dir}" unless @dir.directory?
+    @options = OPTIONS.merge(options)
+    $stderr.puts "Providing OPDS for EPUB files in #{@dir}"
   end
 
   def call(env)
@@ -29,8 +31,8 @@ class OPDSServer
     @request = Rack::Request.new(env)
     response = Rack::Response.new
 
-    if env['HTTP_IF_MODIFIED_SINCE'] and
-        @last_modified.to_s <= Time.httpdate(env['HTTP_IF_MODIFIED_SINCE']).to_s
+    if_modifed_since = env['HTTP_IF_MODIFIED_SINCE']
+    if if_modifed_since and @last_modified.to_s <= Time.httpdate(if_modifed_since).to_s
       response.status = Rack::Utils.status_code(:not_modified)
     elsif !@request.head?
       response.body << make_feed.to_s
