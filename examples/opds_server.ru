@@ -23,8 +23,8 @@ class OPDSServer
   end
 
   def call(env)
-    @files = Dir["#{@dir}/**/*.epub"]
-    @last_modified = @files.collect {|epub| File.mtime epub}.max
+    @files = Pathname.glob("#{@dir}/**/*.epub")
+    @last_modified = @files.collect(&:mtime).max
 
     @request = Rack::Request.new(env)
     response = Rack::Response.new
@@ -55,14 +55,14 @@ class OPDSServer
             entry.id = book.unique_identifier.content
             entry.title = book.title
             entry.summary = book.description
-            uri_path = Pathname(path).relative_path_from(@dir)
+            uri_path = path.relative_path_from(@dir)
             entry.links.new_link do |link|
               link.rel  = RSS::OPDS::RELATIONS['acquisition']
               link.href = @request.base_url + '/' + ERB::Util.url_encode(uri_path.to_path)
               link.type = 'application/epub+zip'
             end
             updated = Time.parse(book.date.content) rescue nil
-            entry.updated = updated || File.mtime(path)
+            entry.updated = updated || path.mtime
           end
         rescue => error
           $stderr.puts error
