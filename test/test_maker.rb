@@ -48,7 +48,7 @@ class TestMaker < TestOPDS
       end
     }
     doc = REXML::Document.new(feed.to_s)
-    links = REXML::XPath.match(doc, "//[@opds:activeFacet]")
+    links = REXML::XPath.match(doc, "//*[@opds:activeFacet]")
     assert_not_empty links
     assert_equal 'true', links.first.attributes['opds:activeFacet']
   end
@@ -73,7 +73,7 @@ class TestMaker < TestOPDS
       end
     }
     doc = REXML::Document.new(feed.to_s)
-    assert_empty REXML::XPath.match(doc, "//[@opds:activeFacet]")
+    assert_empty REXML::XPath.match(doc, "//*[@opds:activeFacet]")
   end
 
   def test_navigation_feed_accepts_aqcuisition_feed_as_item
