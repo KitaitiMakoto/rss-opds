@@ -104,6 +104,7 @@ Changelog
 * Add sample script 'examples/build-catalog-from-epub.rb' which build OPDS catalog feed using specified EPUB files
 * Add sample server 'examples/opds_server.ru' for Rack
 * Remove Money from dependencies
+* [BUG FIX]Add element component to XPath
 
 Contributing
 ------------
